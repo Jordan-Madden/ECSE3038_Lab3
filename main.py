@@ -10,9 +10,13 @@ from bson.json_util import dumps
 from datetime import datetime
 from flask_cors import CORS
 from json import loads
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
+
+mongo_uri = pd.read_csv("db_credentials.csv", sep="\t").columns[0]
+app.config["MONGO_URI"] = mongo_uri
 mongo = PyMongo(app)
 
 # Super fancy database
