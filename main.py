@@ -34,7 +34,7 @@ class TankSchema(Schema):
     location = fields.String(required=True)
     latitude  = fields.String(required=True)
     longitude = fields.String(required=True)
-    percentage_full = fields.Float(required=True)
+    percentage_full = fields.Integer(required=True)
 
 @app.route("/")
 def home():
