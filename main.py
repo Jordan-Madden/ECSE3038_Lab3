@@ -15,7 +15,9 @@ import pandas as pd
 app = Flask(__name__)
 CORS(app)
 
-mongo_uri = pd.read_csv("db_credentials.csv", sep="\t").columns[0]
+username = pd.read_csv("db_credentials.csv").columns[0]
+password = pd.read_csv("db_credentials.csv").columns[1]
+mongo_uri = "mongodb+srv://{}:{}@cluster0.weykq.mongodb.net/monday?retryWrites=true&w=majority".format(username, password)
 app.config["MONGO_URI"] = mongo_uri
 mongo = PyMongo(app)
 
