@@ -75,22 +75,18 @@ def get_profile():
 
         return jsonify(PROFILE_DB)    
 
-
 ###############################################################################
 
 # Returns all of the data in TANK_DB
 @app.route("/data", methods=["GET", "POST"])
 def tank_data():
     if request.method == "GET":
-        tank = mongo.db.tanks.find()
-        return jsonify(dumps(loads(tank)))  
-
+        tanks = mongo.db.tanks.find()
+        return jsonify(loads(dumps(tanks)))  
     elif request.method == "POST":
         try:
             tank = TankSchema().load(request.json)
-            tank_id = mongo.db.tanks._insert_one(tank).inserted_id
-
-            tank = mongo.db.fruits.find_one(tank_id)
+            mongo.db.tanks.insert_one(tank)
             return loads(dumps(tank))
         except ValidationError as e:
             return e.messages, 400   
